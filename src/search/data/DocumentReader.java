@@ -37,7 +37,7 @@ public class DocumentReader {
 					term = termStemming(term); // TODO: Not Implemented.
 					int termId = engine.getNewTermId(term);
 
-					Map<Integer, TermFrequency> termFrequencyMap = engine.getTermDocumentMap(termId);
+					Map<Integer, TermFrequency> termFrequencyMap = engine.getDocumentListByTermId(termId);
 					if (termFrequencyMap.get(document.getId()) == null)
 						termFrequencyMap.put(document.getId(), new TermFrequency(termId, 0, document.getId()));
 
