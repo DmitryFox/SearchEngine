@@ -21,11 +21,11 @@ public class Engine {
 	/**
 	 * List of all documents.
 	 */
-	private static final Map<Integer, Document> documentMap = new LinkedHashMap<>();
+	private static final Map<Integer, Document> documentMap = new HashMap<>();
 	/**
 	 * A list of all the terms that are in all documents.
 	 */
-	private static final Map<String, Integer> termIdMap = new LinkedHashMap<>();
+	private static final Map<String, Integer> termIdMap = new HashMap<>();
 	/**
 	 * The list of frequencies of all terms along with documents.
 	 * Map<TermId, Map<DocumentId, TermFrequency>>
@@ -38,10 +38,6 @@ public class Engine {
 
 	public void addDocument(int id, Document document) {
 		documentMap.put(id, document);
-	}
-
-	public Map<Integer, Document> getDocumentMap() {
-		return documentMap;
 	}
 
 	public int getTermId(String term) {
@@ -66,11 +62,7 @@ public class Engine {
 		termIdMap.put(term, id);
 	}
 
-	public Map<String, Integer> getTermMap() {
-		return termIdMap;
-	}
-
-	public Map<Integer, TermFrequency> getDocumentListByTermId(int id) {
+	public Map<Integer, TermFrequency> getTermDocumentMap(int id) {
 		if (termDocumentMap.get(id) == null) {
 			termDocumentMap.put(id, new LinkedHashMap<>());
 		}
@@ -84,10 +76,6 @@ public class Engine {
 
 	public void addTermFrequency(int id, Map<Integer, TermFrequency> termFrequency) {
 		termDocumentMap.put(id, termFrequency);
-	}
-
-	public Map<Integer, Map<Integer, TermFrequency>> getTermDocumentMap() {
-		return termDocumentMap;
 	}
 
 	public void calculateTermFrequency() {
@@ -106,12 +94,6 @@ public class Engine {
 		for (Map.Entry<Integer, Map<Integer, TermFrequency>> termDocuments : termDocumentMap.entrySet()) {
 			termDocuments.setValue(ArrayUtil.sort(termDocuments.getValue(), TERM_FREQUENCY_COMPARATOR));
 		}
-	}
-
-	public void clear() {
-		termDocumentMap.clear();
-		termIdMap.clear();
-		documentMap.clear();
 	}
 
 	@SuppressWarnings("synthetic-access")
